@@ -11,11 +11,11 @@
 #   poppler-utils poppler-data imagemagick pdftk sam2p
 #
 
-SRC = 'sample.pdf'
-TOP = 250
-BOTTOM = 100
-LEFT = 50
-RIGHT = 50
+SRC = ENV['SRC'] || 'sample.pdf'
+TOP = ENV['TOP'] || 250
+BOTTOM = ENV['BOTTOM'] || 100
+LEFT = ENV['LEFT'] || 50
+RIGHT = ENV['RIGHT'] || 50
 
 # for Kindle Voyage (display size 1080x1440)
 SIZE = '1016x1364' # for small books reading portrait style
@@ -32,7 +32,7 @@ SIZE = '1016x1364' # for small books reading portrait style
 #SIZE = 'x693' # for generating mobi, portrait style only
 #SIZE = '600x800' # for generating zip archived png files 
 
-LEVEL = '0%,100%'
+LEVEL = ENV['LEVEL'] || '0%,100%'
 #LEVEL = '0%,80%,0.2' # for grayscale or fullcolor origin.
 
 #---------------------------------------------------------
