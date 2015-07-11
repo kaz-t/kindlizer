@@ -47,6 +47,8 @@ OPF = SRC.sub( /\.pdf$/, '.opf' )
 HTML = SRC.sub( /\.pdf$/, '.html' )
 ZIP = SRC.sub( /\.pdf$/, '.zip' )
 
+PHASE3_COMMAND = ENV['PHASE3_COMMAND'] || 'sam2p'
+
 def count_pages
 	open( "|pdfinfo #{SRC}", 'r:utf-8', &:read ).scan( /^Pages:\s*(\d+)/ ).flatten[0].to_i
 end
@@ -91,7 +93,11 @@ def ppm2png( ppm, png )
 end
 
 def png2pdf( png, pdf )
-	sh "sam2p -j:quiet #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
+  if PHASE3_COMMAND == 'convert'
+    sh "convert #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
+  else
+    sh "sam2p -j:quiet #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
+  end
 end
 
 pages = count_pages
