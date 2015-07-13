@@ -151,23 +151,17 @@ task :ppm => [PPM_DIR, SRC] + PPMS
 
 desc 'cleanap ppm images.'
 task 'clean-ppm' do
-	begin
-		rm PPMS.collect { |f| ppm_file(f) }
-	rescue
-	end
+  rm_rf PPM_DIR
 end
 
 desc 'cleanap png images.'
 task 'clean-png' do
-	begin
-		rm PNGS
-	rescue
-	end
+  rm_rf PNG_DIR
 end
 
 desc 'cleanap temporaly pdf files.'
 task 'clean-pdf' do
-	rm FileList["#{PDF_DIR}/*.pdf"]
+  rm_rf PDF_DIR
 end
 
 desc 'cleanap all tmp files.'
@@ -180,9 +174,6 @@ task :clean => ['clean-png', 'clean-ppm', 'clean-pdf'] do
 		rm [HTML, OPF]
 	rescue
 	end
-	rmdir PPM_DIR
-	rmdir PNG_DIR
-	rmdir PDF_DIR
 end
 
 desc 'generate zip file'
