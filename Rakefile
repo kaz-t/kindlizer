@@ -94,7 +94,7 @@ end
 
 def png2pdf( png, pdf )
   if PHASE3_COMMAND == 'convert'
-    sh "convert #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
+    sh "convert #{ENV['KINDLIZER_PHASE3_OPT']} #{png} +repage #{pdf}"
   else
     sh "sam2p -j:quiet #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
   end
