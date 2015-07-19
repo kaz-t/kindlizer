@@ -7,7 +7,6 @@ Copy Rakefile to your work directory and modify parameters by your environment:
 *  SRC (must): source PDF file name in current directory.
 *  TOP, BOTTOM, LEFT, RIGHT: default margins (pixel) of trimming.
 *  SIZE: adjust image size by destination format.
-*  LEVEL (optional): level option of ImageMagic.
 
 for Debian or Ubuntu user, needs packages below:
 
@@ -33,7 +32,6 @@ PDFファイルごとにRakefileをコピーして、以下の値を書き換え
 *  SRC (必須): 最適化元のPDFファイル
 *  TOP, BOTTOM, LEFT, RIGHT: あらかじめカットしておく領域(ピクセル)
 *  SIZE: Kindleを縦持ち(portrate)にして読むか横持ち(landscape)にして読むか
-*  LEVEL (optional): ImageMagicのlevelオプション。地の紙に色が付いている場合に
 
 以下の環境変数を指定すると、それぞれフェーズ2(ppm→pngを行うconvertコマンド)とフェーズ3(png→pdfを行うsam2pコマンド)にオプションを追加できます:
 

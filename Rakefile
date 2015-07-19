@@ -5,7 +5,6 @@
 #   SRC (must): source PDF file name.
 #   TOP, BOTTOM, LEFT, RIGHT: default margins (pixel) of trimming.
 #   SIZE: adjust image size by destination format.
-#   LEVEL (optional): level option of ImageMagic.
 #
 # for Debian or Ubuntu user, needs packages below:
 #   poppler-utils poppler-data imagemagick pdftk sam2p
@@ -31,9 +30,6 @@ SIZE = '1016x1364' # for small books reading portrait style
 #SIZE = '720' # for large books reading landscape style
 #SIZE = 'x693' # for generating mobi, portrait style only
 #SIZE = '600x800' # for generating zip archived png files 
-
-LEVEL = ENV['LEVEL'] || '0%,100%'
-#LEVEL = '0%,80%,0.2' # for grayscale or fullcolor origin.
 
 #---------------------------------------------------------
 
@@ -83,12 +79,12 @@ end
 
 def ppm2png( ppm, png )
   sh "mogrify "\
-    " #{ENV["KINDLIZER_PHASE2_OPT"]}"\
-    " -level '#{LEVEL}' -type Grayscale -background white"\
+    " -type Grayscale -background white"\
     " -chop #{LEFT}x#{TOP}"\
     " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
     " -gravity NorthWest -fuzz 50% -trim -resize #{SIZE}"\
     " #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
+    " #{ENV["KINDLIZER_PHASE2_OPT"]}"\
     " -path \"#{PNG_DIR}\"" \
     " -format png" \
     " #{PPM_DIR}/*.ppm"
