@@ -16,6 +16,7 @@ BOTTOM = ENV['BOTTOM'] || 100
 LEFT = ENV['LEFT'] || 50
 RIGHT = ENV['RIGHT'] || 50
 OUT_EXT = ENV['OUT_EXT'] || 'out'
+FUZZ = ENV['FUZZ'] || '50%'
 
 # for Kindle Voyage (display size 1080x1440)
 SIZE = '1016x1364' # for small books reading portrait style
@@ -83,7 +84,7 @@ def ppm2png( ppm, png )
     " -type Grayscale -background white"\
     " -chop #{LEFT}x#{TOP}"\
     " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
-    " -gravity NorthWest -fuzz 50% -trim -resize #{SIZE}"\
+    " -gravity NorthWest -fuzz #{FUZZ} -trim -resize #{SIZE}"\
     " #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
     " #{ENV["KINDLIZER_PHASE2_OPT"]}"\
     " -path \"#{PNG_DIR}\"" \
