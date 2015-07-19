@@ -82,22 +82,29 @@ def ppm_file( ppm )
 end
 
 def ppm2png( ppm, png )
-	sh "convert #{ppm_file(ppm)} "\
-		" #{ENV["KINDLIZER_PHASE2_OPT"]}"\
-		" -level '#{LEVEL}' -type Grayscale -background white"\
-		" -chop #{LEFT}x#{TOP}"\
-		" -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
-		" -gravity NorthWest -fuzz 50% -trim -resize #{SIZE}"\
-		" #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
-		" #{png}"
+  sh "mogrify "\
+    " #{ENV["KINDLIZER_PHASE2_OPT"]}"\
+    " -level '#{LEVEL}' -type Grayscale -background white"\
+    " -chop #{LEFT}x#{TOP}"\
+    " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
+    " -gravity NorthWest -fuzz 50% -trim -resize #{SIZE}"\
+    " #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
+    " -path \"#{PNG_DIR}\"" \
+    " -format png" \
+    " #{PPM_DIR}/*.ppm"
+end
+
+def png2pdf_mogrify
+  sh "mogrify " \
+     " #{ENV['KINDLIZER_PHASE3_OPT']}" \
+     " -format pdf" \
+     " +repage" \
+     " -path #{PDF_DIR}" \
+     " #{PNG_DIR}/*.png"
 end
 
 def png2pdf( png, pdf )
-  if PHASE3_COMMAND == 'convert'
-    sh "convert #{ENV['KINDLIZER_PHASE3_OPT']} #{png} +repage #{pdf}"
-  else
-    sh "sam2p -j:quiet #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
-  end
+  sh "sam2p -j:quiet #{ENV['KINDLIZER_PHASE3_OPT']} #{png} #{pdf}"
 end
 
 pages = count_pages
@@ -107,11 +114,19 @@ PDFS = image_list( PDF_DIR, 'pdf', pages )
 
 PNGS.each_with_index do |png, i|
 	file PDFS[i] => [PDF_DIR, PNGS[i]] do |t|
-		png2pdf( t.prerequisites[1], t.name )
+    if PHASE3_COMMAND == 'mogrify'
+      unless File.exist?(PDFS[-1]) then
+        png2pdf_mogrify
+      end
+    else
+      png2pdf( t.prerequisites[1], t.name )
+    end
 	end
 
 	file PNGS[i] => [PNG_DIR, PPMS[i]] do |t|
-		ppm2png( t.prerequisites[1], t.name )
+    unless File.exist?(PNGS[-1]) then
+      ppm2png( t.prerequisites[1], t.name )
+    end
 	end
 
 	file PPMS[i] => [PPM_DIR, SRC] do
