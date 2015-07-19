@@ -82,14 +82,14 @@ def ppm_file( ppm )
 end
 
 def ppm2png( ppm, png )
-	sh "convert #{ppm_file(ppm)} \
-		#{ENV["KINDLIZER_PHASE2_OPT"]} \
-		-level '#{LEVEL}' -type Grayscale -background white \
-		-chop #{LEFT}x#{TOP} \
-		-gravity SouthEast -chop #{RIGHT}x#{BOTTOM}\
-		-gravity NorthWest -fuzz 50% -trim -resize #{SIZE}\
-		#{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}\
-		#{png}"
+	sh "convert #{ppm_file(ppm)} "\
+		" #{ENV["KINDLIZER_PHASE2_OPT"]}"\
+		" -level '#{LEVEL}' -type Grayscale -background white"\
+		" -chop #{LEFT}x#{TOP}"\
+		" -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
+		" -gravity NorthWest -fuzz 50% -trim -resize #{SIZE}"\
+		" #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
+		" #{png}"
 end
 
 def png2pdf( png, pdf )
