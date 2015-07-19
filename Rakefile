@@ -15,6 +15,7 @@ TOP = ENV['TOP'] || 250
 BOTTOM = ENV['BOTTOM'] || 100
 LEFT = ENV['LEFT'] || 50
 RIGHT = ENV['RIGHT'] || 50
+OUT_EXT = ENV['OUT_EXT'] || 'out'
 
 # for Kindle Voyage (display size 1080x1440)
 SIZE = '1016x1364' # for small books reading portrait style
@@ -37,7 +38,7 @@ PPM_DIR = './ppm'; directory PPM_DIR
 PNG_DIR = './png'; directory PNG_DIR
 PDF_DIR = './pdf'; directory PDF_DIR
 
-DST = SRC.sub( /\.pdf$/, '.out.pdf' )
+DST = SRC.sub( /\.pdf$/, ".#{OUT_EXT}.pdf" )
 MOBI = SRC.sub( /\.pdf$/, '.mobi' )
 OPF = SRC.sub( /\.pdf$/, '.opf' )
 HTML = SRC.sub( /\.pdf$/, '.html' )
