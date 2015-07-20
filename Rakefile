@@ -82,6 +82,7 @@ end
 def ppm2png( ppm, png )
   sh "mogrify "\
     " -type Grayscale -background white"\
+    " -deskew 40%" \
     " -chop #{LEFT}x#{TOP}"\
     " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
     " -gravity NorthWest -fuzz #{FUZZ} -trim -resize #{SIZE}"\
