@@ -10,11 +10,15 @@
 #   poppler-utils poppler-data imagemagick pdftk sam2p
 #
 
+require 'pathname'
+
 SRC = ENV['SRC'] || 'sample.pdf'
+
 TOP = ENV['TOP'] || 250
 BOTTOM = ENV['BOTTOM'] || 100
 LEFT = ENV['LEFT'] || 50
 RIGHT = ENV['RIGHT'] || 50
+OUT_DIR = ENV['OUT_DIR'] || './'
 OUT_EXT = ENV['OUT_EXT'] || 'out'
 FUZZ = ENV['FUZZ'] || '50%'
 
@@ -39,7 +43,10 @@ PPM_DIR = './ppm'; directory PPM_DIR
 PNG_DIR = './png'; directory PNG_DIR
 PDF_DIR = './pdf'; directory PDF_DIR
 
-DST = SRC.sub( /\.pdf$/, ".#{OUT_EXT}.pdf" )
+
+DST = (Pathname.new(OUT_DIR) +
+       Pathname.new(SRC).basename.to_s.sub( /\.pdf$/, ".#{OUT_EXT}.pdf" )
+      ).to_s
 MOBI = SRC.sub( /\.pdf$/, '.mobi' )
 OPF = SRC.sub( /\.pdf$/, '.opf' )
 HTML = SRC.sub( /\.pdf$/, '.html' )
