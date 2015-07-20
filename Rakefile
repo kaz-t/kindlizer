@@ -21,6 +21,7 @@ RIGHT = ENV['RIGHT'] || 50
 OUT_DIR = ENV['OUT_DIR'] || './'
 OUT_EXT = ENV['OUT_EXT'] || 'out'
 FUZZ = ENV['FUZZ'] || '50%'
+DESKEW = ENV['DESKEW'] || '40%'
 
 # for Kindle Voyage (display size 1080x1440)
 SIZE = '1016x1364' # for small books reading portrait style
@@ -88,8 +89,8 @@ end
 
 def ppm2png( ppm, png )
   sh "mogrify "\
+    " -deskew #{DESKEW}" \
     " -type Grayscale -background white"\
-    " -deskew 40%" \
     " -chop #{LEFT}x#{TOP}"\
     " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
     " -gravity NorthWest -fuzz #{FUZZ} -trim -resize #{SIZE}"\
