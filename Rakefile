@@ -90,12 +90,13 @@ end
 def ppm2png( ppm, png )
   sh "mogrify "\
     " -deskew #{DESKEW}" \
-    " -type Grayscale -background white"\
     " -chop #{LEFT}x#{TOP}"\
     " -gravity SouthEast -chop #{RIGHT}x#{BOTTOM}"\
     " -gravity NorthWest -fuzz #{FUZZ} -trim -resize #{SIZE}"\
-    " #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
+    " -type Grayscale -background white"\
     " #{ENV["KINDLIZER_PHASE2_OPT"]}"\
+    " -fuzz 1% -trim" \
+    " #{/x/ =~ SIZE ? '' : '-gravity SouthWest -splice 1x15 -gravity NorthEast -splice 1x15'}"\
     " -path \"#{PNG_DIR}\"" \
     " -format png" \
     " #{PPM_DIR}/*.ppm"
