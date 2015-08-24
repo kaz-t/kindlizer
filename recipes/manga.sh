@@ -5,10 +5,10 @@ export KINDLIZER_PHASE2_OPT='-depth 4 -level 5%,95% -depth 4'
 export FUZZ='15%'
 export PHASE3_COMMAND='mogrify'
 
-export TOP=0
-export BOTTOM=0
-export LEFT=0
-export RIGHT=0
+export TOP=15
+export BOTTOM=10
+export LEFT=15
+export RIGHT=15
 
 export OUT_DIR='./out'
 export OUT_EXT="voyage"
